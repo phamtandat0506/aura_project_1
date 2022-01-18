@@ -10,6 +10,11 @@ class Menu extends Component {
       listProduct: "",
     };
   }
+
+  giaTien = (flo) => {
+    return(flo.toLocaleString("en"))
+  }
+
   async componentWillMount() {
     await this.props.dispatch(getAllProductAction(20, 1));
     this.setState({
@@ -41,9 +46,9 @@ class Menu extends Component {
               <a
                 href="#"
                 className="tm-product-price-link tm-handwriting-font"
-                style={{ fontSize: 20 }}
+                style={{ fontSize: 16 }}
               >
-                <p style={{ marginTop: "15px" }}>{product.gia_ban_le} đ</p>
+                <p style={{ marginTop: "15px" }}>{this.giaTien(product.gia_ban_le)} đ</p>
                 <span className="tm-product-price-currency"></span>
               </a>
             </div>
