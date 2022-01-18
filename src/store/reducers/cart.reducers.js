@@ -6,42 +6,40 @@ import {
   GET_ITEM_CART,
 } from "../constants/cart.constants";
 
-const initialState = {
-  addCart: "",
-  listCart: JSON.parse(localStorage.getItem("cart"))
-    ? JSON.parse(localStorage.getItem("cart"))
-    : [],
-  deleteCart: 0,
-  fixCart: {},
-  getOneCart: {},
-};
+const initialState = JSON.parse(localStorage.getItem("cart"))
+  ? JSON.parse(localStorage.getItem("cart"))
+  : [];
 
 export const CartReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case ADD_CART: {
-      if(payload)
-      {
-        
+      console.log(state);
+      console.log(payload);
+      let temp = 0;
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].id === payload.id) {
+          state[i].quantity = state[i].quantity + 1;
+          temp = 1;
+        }
       }
-      state.addCart = payload;
-      return { ...state };
+      if (temp === 0) {
+        state.push(payload);
+      }
+      localStorage.setItem("cart", JSON.stringify(state));
+      return [...state];
     }
     case GET_ALL_CART: {
-      state.listCart = payload;
-      return { ...state };
+      return [...state];
     }
     case DELETE_CART: {
-      state.deleteCart = payload;
-      return { ...state };
+      return [...state];
     }
     case UPDATE_CART: {
-      state.fixCart = payload;
-      return { ...state };
+      return [...state];
     }
     case GET_ITEM_CART: {
-      state.getOneCart = payload;
-      return { ...state };
+      return [...state];
     }
     default:
       return state;

@@ -10,8 +10,7 @@ export const getAllCartAction = () => {
   const add = async (dispatch) => {
     try {
       dispatch({
-        type: GET_ALL_CART,
-        payload: res.data,
+        type: GET_ALL_CART
       });
     } catch (err) {
       console.log(err);

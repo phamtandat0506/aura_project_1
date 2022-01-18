@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { addCartAction } from "../../store/actions/cart.actions";
 import { getAllProductAction } from "../../store/actions/product.actions";
 import { API_URL } from "../../store/constants/conFig";
 
@@ -8,6 +9,11 @@ class Menu extends Component {
     super(props);
     this.state = {
       listProduct: "",
+      id: "",
+      name: "",
+      picture: "",
+      price: "",
+      quantity: 0,
     };
   }
   async componentWillMount() {
@@ -16,17 +22,26 @@ class Menu extends Component {
       listProduct: this.props.listProduct,
     });
   }
+  addCart = async (product) => {
+    console.log(product.ten_vt);
+    await this.setState({
+      id: product._id,
+      name: product.ten_vt,
+      price: product.gia_ban_le,
+      picture: `${API_URL}${product.picture}`,
+      quantity: 1,
+    });
+    this.props.dispatch(addCartAction(this.state))
+  };
   showListProduct = (listProduct) => {
-    console.log(listProduct);
     let result = "";
     if (listProduct.length > 0) {
       result = listProduct.map((product, index) => {
-        console.log(product);
         return (
           <div
             className="tm-product col-lg-6 col-md-6"
             key={index}
-            style={{ margin: "5px", padding: "10", width: '48%' }}
+            style={{ margin: "5px", padding: "10", width: "48%" }}
           >
             <img
               src={`${API_URL}${product.picture}`}
@@ -39,8 +54,8 @@ class Menu extends Component {
             </div>
             <div className="tm-product-price">
               <a
-                href="#"
                 className="tm-product-price-link tm-handwriting-font"
+                onClick={() => this.addCart(product)}
                 style={{ fontSize: 20 }}
               >
                 <p style={{ marginTop: "15px" }}>{product.gia_ban_le} đ</p>
