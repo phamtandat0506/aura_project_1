@@ -14,8 +14,6 @@ export const CartReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case ADD_CART: {
-      console.log(state);
-      console.log(payload);
       let temp = 0;
       for (let i = 0; i < state.length; i++) {
         if (state[i].id === payload.id) {
@@ -33,9 +31,21 @@ export const CartReducer = (state = initialState, action) => {
       return [...state];
     }
     case DELETE_CART: {
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].id === payload.id) {
+          state.splice(i, 1);
+        }
+      }
+      localStorage.setItem("cart", JSON.stringify(state));
       return [...state];
     }
     case UPDATE_CART: {
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].id === payload.id) {
+          state[i].quantity = payload.quantity;
+        }
+      }
+      localStorage.setItem("cart", JSON.stringify(state));
       return [...state];
     }
     case GET_ITEM_CART: {

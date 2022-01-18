@@ -60,12 +60,8 @@ class Menu extends Component {
             <div className="tm-product-price">
               <a
                 className="tm-product-price-link tm-handwriting-font"
-<<<<<<< HEAD
                 onClick={() => this.addCart(product)}
                 style={{ fontSize: 20 }}
-=======
-                style={{ fontSize: 16 }}
->>>>>>> 290cf62846c93d22fbac1fbbe3973673b0e1ac38
               >
                 <p style={{ marginTop: "15px" }}>{this.giaTien(product.gia_ban_le)} đ</p>
                 <span className="tm-product-price-currency"></span>

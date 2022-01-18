@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {
+  deleteCartAction,
+  updateCartAction,
+} from "../../store/actions/cart.actions";
 
 class Cart extends Component {
   constructor(props) {
@@ -13,6 +17,28 @@ class Cart extends Component {
       cart: this.props.cart,
     });
   }
+  componentDidUpdate() {
+    if (JSON.stringify(this.props.cart) !== JSON.stringify(this.state.cart)) {
+      this.setState({
+        cart: this.props.cart,
+      });
+    }
+  }
+  onDelete = (cartItem) => {
+    this.props.dispatch(deleteCartAction(cartItem));
+  };
+  changeQuantity = (cartItem, change) => {
+    if (cartItem.quantity + change > 0) {
+      let temp = {
+        id: cartItem.id,
+        name: cartItem.name,
+        price: cartItem.price,
+        picture: cartItem.picture,
+        quantity: cartItem.quantity + change,
+      };
+      this.props.dispatch(updateCartAction(temp));
+    }
+  };
   showCart = (cart) => {
     let result = null;
     if (cart.length > 0) {
@@ -21,7 +47,7 @@ class Cart extends Component {
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{cartItem.name}</td>
-            <td>{cartItem.price} </td>
+            <td>{cartItem.price.toLocaleString("en")} đ</td>
             <td>
               <img
                 src={cartItem.picture}
@@ -29,16 +55,28 @@ class Cart extends Component {
               />
             </td>
             <td>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => this.changeQuantity(cartItem, -1)}
+              >
                 -
               </button>
               {cartItem.quantity}
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => this.changeQuantity(cartItem, 1)}
+              >
                 +
               </button>
             </td>
             <td>
-              <button type="button" className="btn btn-danger">
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => this.onDelete(cartItem)}
+              >
                 Delete
               </button>
             </td>
@@ -47,6 +85,15 @@ class Cart extends Component {
       });
     }
     return result;
+  };
+  sumMoney = (cart) => {
+    let result = 0;
+    if (cart.length > 0) {
+      for (let i = 0; i < cart.length; i++) {
+        result = result + cart[i].price * cart[i].quantity;
+      }
+    }
+    return result.toLocaleString("en");
   };
   render() {
     const { cart } = this.state;
@@ -68,7 +115,7 @@ class Cart extends Component {
           </table>
           <div className="row" style={{ marginBottom: 20 }}>
             <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
-              <p>Total money: </p>
+              <p>Total money: {this.sumMoney(cart)}</p>
             </div>
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 ">
               <button type="button" className="btn btn-success">
