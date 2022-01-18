@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-class Header extends Component {
-  // constructor(props) {
-  //     super(props);
 
-  // }
+class Header extends Component {
+ 
   render() {
     return (
       <div>
@@ -51,6 +49,7 @@ class Header extends Component {
                       <li>
                         <Link to="/contact">Contact</Link>
                       </li>
+                      
                     </ul>
                   </nav>
                 </div>

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { addCartAction } from "../../store/actions/cart.actions";
 import { getAllProductAction } from "../../store/actions/product.actions";
 import { API_URL } from "../../store/constants/conFig";
+import { Link } from 'react-router-dom';
 
 class Menu extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Menu extends Component {
   }
 
   giaTien = (flo) => {
-    return(flo.toLocaleString("en"))
+    return (flo.toLocaleString("en"))
   }
 
   async componentWillMount() {
@@ -38,24 +39,68 @@ class Menu extends Component {
     });
     this.props.dispatch(addCartAction(this.state))
   };
+
+  toURL = (str) => {
+    // Chuyển hết sang chữ thường
+    str = str.toLowerCase();
+
+    // xóa dấu
+    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
+    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
+    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
+    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
+    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
+    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
+    str = str.replace(/(đ)/g, 'd');
+
+    // Xóa ký tự đặc biệt
+    str = str.replace(/([^0-9a-z-\s])/g, '');
+
+    // Xóa khoảng trắng thay bằng ký tự -
+    str = str.replace(/(\s+)/g, '-');
+
+    // xóa phần dự - ở đầu
+    str = str.replace(/^-+/g, '');
+
+    // xóa phần dư - ở cuối
+    str = str.replace(/-+$/g, '');
+
+    // return
+    return str;
+  }
+
   showListProduct = (listProduct) => {
     let result = "";
     if (listProduct.length > 0) {
+
       result = listProduct.map((product, index) => {
+        const mt = product.mieu_ta
         return (
           <div
             className="tm-product col-lg-6 col-md-6"
             key={index}
             style={{ margin: "5px", padding: "10", width: "48%" }}
           >
-            <img
-              src={`${API_URL}${product.picture}`}
-              alt="Product"
-              style={{ width: "136px", height: "136px" }}
-            />
+            <Link
+              to={"/detail/" + this.toURL(product.ten_vt) + "/" + product._id}
+            >
+              <img
+                src={`${API_URL}${product.picture}`}
+                alt="Product"
+                style={{ width: "136px", height: "136px" }}
+              />
+            </Link>
             <div className="tm-product-text">
-              <h3 className="tm-product-title">{product.ten_vt}</h3>
-              <p className="tm-product-description">Maecenas tempus</p>
+              <Link
+                to={"/detail/" + this.toURL(product.ten_vt) + "/" + product._id}
+              >
+                <h3 className="tm-product-title">{product.ten_vt}</h3>
+              </Link>
+              <p className="tm-product-description">
+                <div >
+                  <div dangerouslySetInnerHTML={{ __html: mt }}></div>
+                </div>
+              </p>
             </div>
             <div className="tm-product-price">
               <a
@@ -71,9 +116,12 @@ class Menu extends Component {
         );
       });
     }
+
     return result;
   };
+
   render() {
+
     return (
       <div className="tm-main-section light-gray-bg">
         <div className="container" id="main">
