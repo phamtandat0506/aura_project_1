@@ -4,7 +4,7 @@ import {
     UPDATE_PRODUCT,
     GET_ALL_PRODUCT,
     GET_ITEM_PRODUCT
-  } from '../constants/product.constants';
+  } from '../constants/product.constants'; 
   
   const initialState = {
     addProduct: '',

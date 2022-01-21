@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { getAllProductAction } from './../../store/actions/product.actions';
 import { API_URL } from '../../store/constants/conFig'
 
-import parse from 'html-react-parser'
-import { DOMPurify } from 'dompurify';
+// import parse from 'html-react-parser'
+// import { DOMPurify } from 'dompurify';
+import { addCartAction } from "../../store/actions/cart.actions";
 
 
 
@@ -13,7 +14,12 @@ class Detail extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            listProduct: ""
+            listProduct: "",
+            id: "",
+            name: "",
+            picture: "",
+            price: "",
+            quantity: 0,
         }
     }
 
@@ -24,6 +30,18 @@ class Detail extends Component {
         })
         console.log(this.props.listProduct);
 
+    }
+
+    addCart = async (pro) => {
+        console.log(pro.ten_vt);
+        await this.setState({
+            id: pro._id,
+            name: pro.ten_vt,
+            price: pro.gia_ban_le,
+            picture: `${API_URL}${pro.picture}`,
+            quantity: 1,
+        })
+        this.props.dispatch(addCartAction(this.state))
     }
 
     render() {
@@ -57,18 +75,36 @@ class Detail extends Component {
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                                        <h3
-                                                            style={{ color: "Brown" }}
-                                                        >
-                                                            {item.gia_ban_le.toLocaleString("en")} vnđ
-                                                        </h3>
+                                                    
+                                                    <div className="row">
+                                                        <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                                            <h3
+                                                                style={{ color: "Brown" }}
+                                                            >
+                                                                {item.gia_ban_le.toLocaleString("en")} vnđ
+                                                            </h3>
+                                                        </div>
+                                                        
+                                                        <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                            
+                                                            <button 
+                                                                type="button" 
+                                                                className="btn btn-primary"
+                                                                onClick={() => this.addCart(item)}
+                                                            >Buy</button>
+                                                            
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                        
                                                         <div >
-                                                            <div dangerouslySetInnerHTML={{ __html: mt }}></div>
+                                                            <span dangerouslySetInnerHTML={{ __html: mt }}></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div >
-                                                    <div dangerouslySetInnerHTML={{ __html: mtct }}></div>
+                                                    <span dangerouslySetInnerHTML={{ __html: mtct }}></span>
                                                 </div>
                                             </div>
                                         </div>

@@ -7,6 +7,7 @@ import Contact from "./page/contact/contact.page";
 import Special from "./page/special/special.page";
 import Cart from "./page/cart/cart.page";
 import Detail from './page/details/detailsproduct.page';
+import Payment from "./page/payment/payment.page";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/special" element={<Special />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
       <Footer />
     </BrowserRouter>

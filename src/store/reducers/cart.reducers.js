@@ -11,13 +11,13 @@ const initialState = JSON.parse(localStorage.getItem("cart"))
   : [];
 
 export const CartReducer = (state = initialState, action) => {
-  const { type, payload } = action;
+  const { type, payload } = action; 
   switch (type) {
     case ADD_CART: {
       let temp = 0;
       for (let i = 0; i < state.length; i++) {
         if (state[i].id === payload.id) {
-          state[i].quantity = state[i].quantity + 1;
+          state[i].quantity = state[i].quantity + 1; 
           temp = 1;
         }
       }

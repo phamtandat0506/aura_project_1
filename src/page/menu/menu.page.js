@@ -28,6 +28,7 @@ class Menu extends Component {
       listProduct: this.props.listProduct,
     });
   }
+
   addCart = async (product) => {
     console.log(product.ten_vt);
     await this.setState({
@@ -97,9 +98,9 @@ class Menu extends Component {
                 <h3 className="tm-product-title">{product.ten_vt}</h3>
               </Link>
               <p className="tm-product-description">
-                <div >
-                  <div dangerouslySetInnerHTML={{ __html: mt }}></div>
-                </div>
+                <span >
+                  <span dangerouslySetInnerHTML={{ __html: mt }}></span>
+                </span>
               </p>
             </div>
             <div className="tm-product-price">
@@ -121,7 +122,7 @@ class Menu extends Component {
   };
 
   render() {
-
+    
     return (
       <div className="tm-main-section light-gray-bg">
         <div className="container" id="main">

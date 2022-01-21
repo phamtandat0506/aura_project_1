@@ -12,7 +12,7 @@ export const getAllProductAction = (limit, page) => {
         "GET",
       );
       dispatch({
-        type: GET_ALL_PRODUCT,
+        type: GET_ALL_PRODUCT, 
         payload: res.data,
       });
     } catch (err) {

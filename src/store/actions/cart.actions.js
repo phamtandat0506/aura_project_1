@@ -18,13 +18,13 @@ export const getAllCartAction = () => {
   };
   return add;
 };
-
+ 
 export const getItemCartAction = (id) => {
   const add = async (dispatch) => {
     try {
       dispatch({
         type: GET_ITEM_CART,
-        payload: id,
+        payload: id, 
       });
     } catch (err) {
       console.log(err);
