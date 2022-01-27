@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { getAllPaymentAction } from '../../store/actions/payment.actions';
+
 
 class Payment extends Component {
 
@@ -8,7 +8,13 @@ class Payment extends Component {
         super(props);
         this.state = {
             payment: {},
-            cart: {}
+            cart: {},
+            trang_thai: 0,
+            details: [], 
+            t_sl: 0,
+            t_tien_hang: 0,
+            t_ck: 0,
+            t_tt: 0
         }
     }
 
@@ -36,7 +42,7 @@ class Payment extends Component {
                             />
                         </td>
                         <td>{item.price}</td>
-
+                        <td>{item.quantity}</td>
                     </tr>
                 )
             })
@@ -68,27 +74,10 @@ class Payment extends Component {
                                 <input type="text" id="receiver" className="form-control" />
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="status">Status: </label>
-                                <input type="text" id="status" className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="">label</label>
-                                <input type="text" id="" className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="">label</label>
-                                <input type="text" id="" className="form-control" />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="">label</label>
-                                <input type="text" id="" className="form-control" />
-                            </div>
+                            
 
                             <button type="submit" className="btn btn-primary ">Submit</button>
+                            
                         </form>
                     </div>
 
@@ -103,7 +92,7 @@ class Payment extends Component {
                                     <th>Name</th>
                                     <th>Image</th>
                                     <th>Price</th>
-
+                                    <th>Quanlity</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -8,6 +8,7 @@ import Special from "./page/special/special.page";
 import Cart from "./page/cart/cart.page";
 import Detail from './page/details/detailsproduct.page';
 import Payment from "./page/payment/payment.page";
+import Login from './page/login/login.page';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/special" element={<Special />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </BrowserRouter>

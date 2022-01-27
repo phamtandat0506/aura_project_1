@@ -8,7 +8,7 @@ export const getAllProductAction = (limit, page) => {
   const add = async (dispatch) => {
     try {
       const res = await callApi(
-        `api/60939744ac969b4078488026/dmvt?access_token=8e87610b543bec77cc2da2de4e99188e&limit=${limit}&page=${page}`,
+        `/api/60939744ac969b4078488026/dmvt?access_token=8e87610b543bec77cc2da2de4e99188e&limit=${limit}&page=${page}`,
         "GET",
       );
       dispatch({
