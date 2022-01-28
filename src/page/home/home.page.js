@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getTokenUserAction } from "../../store/actions/user.actions";
 
 class Home extends Component {
   constructor(props) {
@@ -8,13 +6,6 @@ class Home extends Component {
     this.state = {
       token: "",
     };
-  }
-  async componentWillMount() {
-    await this.props.dispatch(getTokenUserAction());
-    await this.setState({
-      token: this.props.tokenUser,
-    });
-    console.log(this.state.token);
   }
   render() {
     return (
@@ -275,9 +266,4 @@ class Home extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    tokenUser: state.user.tokenUser,
-  };
-};
-export default connect(mapStateToProps)(Home);
+export default Home;

@@ -21,11 +21,11 @@ export const getTokenUserAction = (username, password) => {
   return add;
 };
 
-export const getDetailUserAction = (_id) => {
+export const getDetailUserAction = (token) => {
   const add = async (dispatch) => {
     try {
       const res = await callApi(
-        `api/60939744ac969b4078488026/dmvt/${_id}?access_token=8e87610b543bec77cc2da2de4e99188e`,
+        `api/profile?access_token=${token}`,
         "GET",
       );
       dispatch({
