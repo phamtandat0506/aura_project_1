@@ -1,10 +1,21 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getTokenUserAction } from "../../store/actions/user.actions";
 
 class Home extends Component {
-  // constructor(props) {
-  //     super(props);
-
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: "",
+    };
+  }
+  async componentWillMount() {
+    await this.props.dispatch(getTokenUserAction());
+    await this.setState({
+      token: this.props.tokenUser,
+    });
+    console.log(this.state.token);
+  }
   render() {
     return (
       <div className="tm-main-section light-gray-bg">
@@ -264,4 +275,9 @@ class Home extends Component {
     );
   }
 }
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    tokenUser: state.user.tokenUser,
+  };
+};
+export default connect(mapStateToProps)(Home);
