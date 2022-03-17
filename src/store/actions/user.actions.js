@@ -10,10 +10,19 @@ export const getTokenUserAction = (username, password) => {
       const res = await callApi(`auth/local`, "GET", "", {
         Authorization: basicAuth,
       });
-      dispatch({
-        type: GET_TOKEN_USER,
-        payload: res.data,
-      });
+      if(res.data)
+      {
+        dispatch({
+          type: GET_TOKEN_USER,
+          payload: res.data
+        });
+      }
+      else{
+        dispatch({
+          type: GET_TOKEN_USER,
+          payload: res
+        });
+      }
     } catch (err) {
       console.log(err);
     }

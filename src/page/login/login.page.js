@@ -12,9 +12,10 @@ class Login extends Component {
       Username: "",
       Password: "",
       checkLogin: 0,
+      message: "",
     };
   }
-
+  
   onChange = (e) => {
     let target = e.target;
     let name = target.name;
@@ -29,30 +30,36 @@ class Login extends Component {
     await this.props.dispatch(
       getTokenUserAction(this.state.Username, this.state.Password),
     );
-    if (this.props.tokenUser) {
+    if (this.props.tokenUser.token) {
       await this.props.dispatch(
         getDetailUserAction(this.props.tokenUser.token),
       );
       this.setState({
         checkLogin: 1,
       });
-      this.props.navigate.push('/');
+      console.log(this.props.detailUser);
+      console.log(this.props.history);
+      this.props.history.push("/");
     } else {
-      this.setState({
-        checkLogin: -1,
-      });
+      if (this.props.tokenUser.message) {
+        console.log(this.props.tokenUser.message);
+        this.setState({
+          checkLogin: -1,
+          message: this.props.tokenUser.message
+        });
+      }
     }
   };
 
   render() {
-    const { checkLogin } = this.state;
+    const { checkLogin, message } = this.state;
     return (
       <div
         className="container"
         style={{ marginTop: "100px", marginBottom: "20px" }}
       >
         <div className="row">
-          <form method="POST" role="form" onSubmit={this.onSubmit}>
+          <form method="POST" onSubmit={this.onSubmit}>
             <legend className="text-center">Login</legend>
 
             <div className="form-group">
@@ -83,7 +90,7 @@ class Login extends Component {
             </div>
             {checkLogin === -1 ? (
               <div className="alert alert-warning">
-                <strong>Đăng nhập không thành công!</strong> 
+                <strong>{message}!</strong>
               </div>
             ) : (
               ""
